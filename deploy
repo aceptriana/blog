@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
+
+# Generate static files
+hugo # If using a theme, replace by `hugo -t <yourtheme>`
+
+# Enter public directory
+cd public
+# Add changes to git
+git add -A
+
+# Makes new commit
+msg="rebuilding site `date`"
+if [ $# -eq 1 ]
+  then msg="$1"
+fi
+git commit -m "$msg"
+
+# Push local to GitHub
+git push origin master
+
+# Back to hugo root
+cd ..
